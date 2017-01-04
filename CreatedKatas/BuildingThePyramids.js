@@ -29,3 +29,11 @@ function pyramid(height, area) {
 //     Test.assertEquals(pyramid(14, 112), 'XXXXXXXXXXXXXXXX');
 //   });
 // });
+
+describe("pyramid", function(){
+  it("should work for some examples", function(){
+    Test.assertEquals(pyramid(8, 48), 'XXXXXXXXXXXX');
+    Test.assertEquals(pyramid(22, 220), 'XXXXXXXXXXXXXXXXXXXX');
+    Test.assertEquals(pyramid(14, 112), 'XXXXXXXXXXXXXXXX');
+  });
+});
