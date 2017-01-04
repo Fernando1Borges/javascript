@@ -21,29 +21,25 @@ function isSolved(arr) {
 
   // Check combinations in sets array for winner and contents
   for(var k = 0; k < sets.length; k++) {
-    if (check(sets[k] == 1))
+    if (check(sets[k]) == 1)
       return 1;
-    if (check(sets[k] == 2))
+    if (check(sets[k]) == 2)
       return 2;
-    if (check(sets[k] == 3))
+    if (check(sets[k]) == 3)
       blanksCount++;
   }
 
-  return sets;
+  return (blanksCount > 0) ? -1:0 ;
 }
 
 function check(arr) {
-  console.log(arr)
   arr = arr.toString();
-  console.log(arr);
   var regexpZero = /0/g,
       regexpOne = /1/g,
       regexpTwo = /2/g,
       countOne = 0,
       countTwo = 0,
       countThree = 0;
-      console.log(arr);
-  console.log(arr.toString().match(regexpZero))
   countZero = (arr.toString().match(regexpZero) === null) ? 0 : arr.match(regexpZero).length;
   countOne = (arr.toString().match(regexpOne) === null) ? 0 : arr.match(regexpOne).length;
   countTwo = (arr.toString().match(regexpTwo) === null) ? 0 : arr.match(regexpTwo).length;
@@ -52,7 +48,7 @@ function check(arr) {
   return 1;
   else if(countTwo == 3)
   return 2;
-  else if (countZero !== 0) 
+  else if (countZero !== 0)
   return 3;
   else
     return 4;
