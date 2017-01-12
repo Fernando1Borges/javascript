@@ -42,6 +42,29 @@ function validBraces(braces){
 }
  validBraces( "[(])" )
 
+
+ function validBraces(braces){
+  //TODO
+  var open = [];
+  var bracesOpen = ['(','{','['];
+  var bracesClose = [')','}',']'];
+
+  for (let i = 0; i < braces.length; i++) {
+    let char = braces[i];
+    if (bracesOpen.indexOf(char) != -1) {
+      open.push(char);
+    } else if (bracesClose.indexOf(char) != -1) {
+      if (open[open.length - 1] == bracesOpen[bracesClose.indexOf(char)]) {
+        open.pop();
+      } else {
+        return false;
+      }
+    }
+   }
+
+   return (open.length == 0);
+}
+
 //TEST CASES
 // Test.assertEquals(validBraces( "()" ), true);
 // Test.assertEquals(validBraces( "[(])" ), false);
