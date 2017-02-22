@@ -34,22 +34,40 @@
 
 
 function add(n){
-  var addAgain = function(input) {
-    return n + input;
-  };
-  // if (arguments.length === 1) { 
-  //   return arguments[0] + addAgain();
-  // }
-  // else {
-  //   console.log(arguments.length);
-  //   return arguments.length;
-  // }
-  if(arguments.length === 1)
-    return n;
-  else 
-    return addAgain();
+  var sum = n; 
+  
+  function addAgain(b) {
+    if(b) {
+      sum += b;
+      return addAgain;
+    } else {
+      return sum;
+    }
+  }
+  
+  addAgain.toString = function() { return sum; };
+  
+  return addAgain;
 }
+
 add(1)(2);
 // Test.expect(add(1) == 1);
 // Test.expect(add(1)(2) == 3);
 // Test.expect(add(1)(2)(3) == 6);
+
+//OTHER SOLUTIONS
+//jhoffner, OverZealous, Iv.D, AbnerZheng, davjohnsonCW, ddyss100 (plus 27 more warriors)
+
+function add(n){
+  var fn = function(x) {
+    return add(n + x);
+  };
+  
+  fn.valueOf = function() {
+    return n;
+  };
+  
+  return fn;
+}
+
+
