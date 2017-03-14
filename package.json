@@ -1,0 +1,25 @@
+{
+  "name": "kata",
+  "version": "1.0.0",
+  "description": "solutions to codwars.com katas",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github-personal:konradgnat/kata.git"
+  },
+  "keywords": [
+    "kata",
+    "codewars",
+    "javascript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2"
+  }
+}
