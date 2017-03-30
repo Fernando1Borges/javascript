@@ -34,6 +34,13 @@
 
 
 function sumTheTreeValues(root){
+  if(!root)
+    return 0;
+  return root.value + sumTheTreeValues(root.left) + sumTheTreeValues(root.right);
+}
+
+
+function sumTheTreeValues(root){
   if(root.left == null && root.right == null) {
     return root.value;
   }
