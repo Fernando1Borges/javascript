@@ -8,24 +8,22 @@
 
 function Node(data) {
   this.data = data === undefined ? null : data;
-  this.prevNode = null;
   this.next = null;
 }
 
-function reverse(head, prev) {
-  if(head == null) {
+function reverse(curr, prev) {
+  console.log(curr);
+  if(curr == null) {
     return null;
   }
-  if(prev == null) {
-    head.prevNode = null;
+  if(curr.next == null) {
+    head = curr;
+    curr.next = prev;
+    return null;
   }
-  if(head.next === null) {
-    head.next = prev;
-    return "null";
-  } 
-//   head.prevNode = head;
-  reverse(head.next, head);
-  head.prevNode = head.next;
-  head.next =  null;
-  return head.data + " -> ";
+  
+  var next1 = curr.next;
+  curr.next = prev;
+  reverse(next1, curr);
+  return head === undefined ? null : head;
 }
