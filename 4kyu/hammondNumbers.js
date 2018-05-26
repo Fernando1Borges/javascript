@@ -19,36 +19,39 @@ Your code should be able to compute all of the smallest 5,000 (Clojure: 2000) Ha
  *  
  */
 
-
 function hamming (n) {
   if (n === 1) {
     return 1;
   }
+  let i2 = i3 = i5 = 0;
   let hNums = [1];
-  let count = 2;
+  let next_2 = hNums[i2]*2;
+  let next_3 = hNums[i3]*3;
+  let next_5 = hNums[i5]*5;
   while (hNums.length < n) {
-    if (isHammond(count)) {
-      hNums.push(count);
+    next_hNum = Math.min(next_2, next_3, next_5);
+    hNums.push(next_hNum);
+
+    if (next_hNum === next_2) {
+      i2++;
+      next_2 = hNums[i2]*2;
     }
-    count++;
+
+    if (next_hNum === next_3) {
+      i3++;
+      next_3 = hNums[i3]*3;
+    }
+
+    if (next_hNum === next_5) {
+      i5++;
+      next_5 = hNums[i5]*5;
+    }
   }
-  return 'hamming('+n+') should be '+hNums[hNums.length-1];
+
+  return hNums[n-1];
 }
 
-function isHammond(num) {
-  num = maxDiv(num, 2);
-  num = maxDiv(num, 3);
-  num = maxDiv(num, 5);
-  return (num === 1);
-}
-
-function maxDiv(num, prime) {
-  while (num % prime == 0) {
-    num = num / prime;
-  }
-  return num;
-}
-
+// TESTS
 
 console.log(hamming(1) );//== 1, "console.log(hamming(1) );//should be 1";
 console.log(hamming(2) );//== 2, "console.log(hamming(2) );//should be 2";
