@@ -26,48 +26,56 @@ A method has been provided for testing Objects to compare objects recursively wi
 Use it just like Test.assertSimilar, it will call the testing framework for you.
  */
 
- // Converts a URL Query String into an object map
+// Converts a URL Query String into an object map
 function convertQueryToMap(query) {
   query = query.split('&');
-  let result = {};
-  query.map(function (item, index) {
+  let ansArr = [];
+
+  for(let j = 0; j<query.length; j++) {
+    let item = query[j];
     item = item.split('=');
     let value = item[1];
-    result = addNewValue(item[0], item[1], result);
-    console.log('item ;', item);
-  });
-  
-  return result;
-}
-
-function addNewValue(inputObj, value, result) {
-  if (value) {
-    inputObj = inputObj.split('.');
-    let inputObjCurrent = inputObj[0];
-    let currResult = result;
-    for(let i = 0; i<inputObj.length; i++) {
-      
-      if (currResult.hasOwnProperty(inputObj[i])) {
-        console.log('has prpty pre = ', currResult, currResult[inputObj[i]], inputObj[i]);
-        
-        currResult = currResult[inputObj[i]];
-        console.log('has prpty post = ', currResult, inputObj[i]);
-
-
-        continue;
-      }
-      
-      currResult[inputObj[i]] = (i === (inputObj.length-1)) ? value : {};
-    }
-
-    result = currResult;      
+    ansArr.push(buildObject(item[0], value));
   }
-  console.log('result; ', result);
 
-  return result;
+  let ansFinal = ansArr[0];
+  console.log('ansArr', ansArr);
+  for (let i = 1; i < ansArr.length; i++) {
+    ansFinal = Object.assign({}, ansFinal, ansArr[i]);
+  }
+  
+  return ansFinal;
+}
+
+function buildObject(inputObj, value) {
+  let ans = {};
+  let inputObjArr = inputObj.split('.');
+  let len = inputObjArr.length;
+  ans = { [inputObjArr[len-1]]: value}
+  for(let i = len-2; i>=0; i--) {
+    // let ansCopy = Object.assign({}, ans);
+    // ans = { [inputObjArr[i]]: ansCopy };
+    ans = { [inputObjArr[i]]: ans };
+  }
+
+  return ans;
 }
 
 
+function extend (target) {
+    for(var i=1; i<arguments.length; ++i) {
+        var from = arguments[i];
+        if(typeof from !== 'object') continue;
+        for(var j in from) {
+            if(from.hasOwnProperty(j)) {
+                target[j] = typeof from[j]==='object'
+                ? extend({}, target[j], from[j])
+                : from[j];
+            }
+        }
+    }
+    return target;
+}
 
 var q = 'user.name.firstname=Bob&user.name.lastname=Smith&user.favoritecolor=Light%20Blue',
     out = {
@@ -79,4 +87,13 @@ var q = 'user.name.firstname=Bob&user.name.lastname=Smith&user.favoritecolor=Lig
         'favoritecolor': 'Light Blue'
       }
     };
-console.log(convertQueryToMap(q)); //   out);
+console.log(convertQueryToMap(q));//   out);
+
+
+let obj = 'user.name.firstname',
+ans = {},
+value = 'Bob';
+
+// console.log(addNewValue(obj, value, ans));
+
+
