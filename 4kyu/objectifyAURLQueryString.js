@@ -25,8 +25,6 @@ A method has been provided for testing Objects to compare objects recursively wi
   assertSimilarObjects(myValue, expectedValue);
 Use it just like Test.assertSimilar, it will call the testing framework for you.
  */
-
-// Converts a URL Query String into an object map
 function convertQueryToMap(query) {
   query = query.split('&');
   let ansArr = [];
@@ -37,12 +35,7 @@ function convertQueryToMap(query) {
     let value = item[1];
     ansArr.push(buildObject(item[0], value));
   }
-
-  let ansFinal = ansArr[0];
-  console.log('ansArr', ansArr);
-  for (let i = 1; i < ansArr.length; i++) {
-    ansFinal = Object.assign({}, ansFinal, ansArr[i]);
-  }
+  let ansFinal = mergeObjects({}, ...ansArr);
   
   return ansFinal;
 }
@@ -51,49 +44,29 @@ function buildObject(inputObj, value) {
   let ans = {};
   let inputObjArr = inputObj.split('.');
   let len = inputObjArr.length;
+  value = value ? decodeURIComponent(value) : value;
   ans = { [inputObjArr[len-1]]: value}
   for(let i = len-2; i>=0; i--) {
-    // let ansCopy = Object.assign({}, ans);
-    // ans = { [inputObjArr[i]]: ansCopy };
     ans = { [inputObjArr[i]]: ans };
   }
 
   return ans;
 }
-
-
-function extend (target) {
-    for(var i=1; i<arguments.length; ++i) {
-        var from = arguments[i];
-        if(typeof from !== 'object') continue;
-        for(var j in from) {
-            if(from.hasOwnProperty(j)) {
-                target[j] = typeof from[j]==='object'
-                ? extend({}, target[j], from[j])
-                : from[j];
-            }
-        }
+function mergeObjects(target) {
+  for (let i = 1; i < arguments.length; i++) {
+    let from = arguments[i];
+    if (typeof from !== 'object') continue;
+    for (let j in from) {
+      if (from.hasOwnProperty(j)) {
+        target[j] = typeof from[j] === 'object'
+          ? mergeObjects({}, target[j], from[j])
+          : from[j];
+      }
     }
-    return target;
+  }
+
+  return target;
 }
 
-var q = 'user.name.firstname=Bob&user.name.lastname=Smith&user.favoritecolor=Light%20Blue',
-    out = {
-      'user': {
-        'name': {
-          'firstname': 'Bob',
-          'lastname': 'Smith'
-        },
-        'favoritecolor': 'Light Blue'
-      }
-    };
-console.log(convertQueryToMap(q));//   out);
-
-
-let obj = 'user.name.firstname',
-ans = {},
-value = 'Bob';
-
-// console.log(addNewValue(obj, value, ans));
 
 
