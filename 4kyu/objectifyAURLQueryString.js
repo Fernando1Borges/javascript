@@ -68,5 +68,20 @@ function mergeObjects(target) {
   return target;
 }
 
+// Other solutions
 
+// Converts a URL Query String into an object map
+function convertQueryToMap(query) {
+  var obj = {};
+  query.split('&').map(function(params) {
+    var parts = params.split('=');
+    if (!parts[1]) return {};
+    parts[0].split('.').reduce(function(cur, next, i, arr) {
+      if (!cur[next]) cur[next] = {};
+      if (i === arr.length - 1) cur[next] = decodeURIComponent(parts[1]);
+      return cur[next];
+    }, obj);
+  });
+  return obj;
+}
 
