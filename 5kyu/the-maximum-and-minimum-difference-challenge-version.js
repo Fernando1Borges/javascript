@@ -27,7 +27,7 @@ Some Examples
  maxAndMin([1,2,3,4,5],[6,7,8,9,10]) === [9,1]
  */
 
-
+// SIMPLE On^2 solution - two nested loops - does not pass tests
 function maxAndMin(arr1,arr2){
   let min = Number.MAX_SAFE_INTEGER;
   let max = Number.MIN_SAFE_INTEGER;
@@ -48,4 +48,31 @@ function maxAndMin(arr1,arr2){
   });
 
   return [max, min];
+}
+
+// Passing solution: first sort and then compare closest elements for smallest difference
+// Find maximum by comparing the first and last elements
+// Time: O(m log m + n log n) time to sort and O(m + n) time to fidn the minimum difference.
+// Together the time is O(m log m + n log n);
+// Found solution with help of this article: https://www.geeksforgeeks.org/smallest-difference-pair-values-two-unsorted-arrays/
+
+function maxAndMin(arr1,arr2){
+    let min = Number.MAX_SAFE_INTEGER;
+    let i = 0, j = 0, k;
+    let n = arr1.length - 1;
+    let m = arr2.length - 1;
+    arr1 = arr1.sort((a, b) =>  a - b);
+    arr2 = arr2.sort((a, b) =>  a - b);
+    let max = Math.abs(arr1[0] - arr2[m]);
+    let diff = Math.abs(arr1[n] - arr2[0]);
+    if (diff > max) max = diff;
+
+    while (i <= n && j <= m) {
+        k = Math.abs(arr1[i] - arr2[j]);
+        if (k < min) min = k;
+        if (arr1[i] < arr2[j]) i++;
+        else j++;
+    }
+
+    return [max, min];
 }
