@@ -52,7 +52,7 @@ function maxAndMin(arr1,arr2){
 
 // Passing solution: first sort and then compare closest elements for smallest difference
 // Find maximum by comparing the first and last elements
-// Time: O(m log m + n log n) time to sort and O(m + n) time to fidn the minimum difference.
+// Time: O(m log m + n log n) time to sort and O(m + n) time to find the minimum difference.
 // Together the time is O(m log m + n log n);
 // Found solution with help of this article: https://www.geeksforgeeks.org/smallest-difference-pair-values-two-unsorted-arrays/
 
