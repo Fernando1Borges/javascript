@@ -18,8 +18,7 @@
  */
 
 function incrementString (strng) {
-    let s = strng.split('');
-    let n = [], m;
+    let s = strng.split(''), n = [], m, len, nlen;
     for(let i = s.length - 1; i >= 0; i--) {
         m = parseInt(s[i]);
         if (!isNaN(m)) {
@@ -35,15 +34,13 @@ function incrementString (strng) {
     if (s.length === n.length) {
         s = [];
     }
-    console.log(s);
-    let len = n.length;
-    let num = parseInt(n.join(''));
-    num++;
-    num+='';
-    let numLen = num.split('').length;
-    while (numLen < len) {
-        num = '0'+num;
-        numLen++;
+    len = n.length;
+    n = parseInt(n.join(''));
+    n = n+1+'';
+    nLen = n.split('').length;
+    while (nLen < len) {
+        n = '0'+n;
+        nLen++;
     }
-    return s.join('') + num;
+    return s.join('') + n;
 }
